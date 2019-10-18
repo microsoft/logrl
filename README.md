@@ -1,64 +1,103 @@
----
-page_type: sample
-languages:
-- csharp
-products:
-- dotnet
-description: "Add 150 character max description"
-urlFragment: "update-this-to-unique-url-stub"
----
+# Logarithmic Reinforcement Learning
 
-# Official Microsoft Sample
+This repository hosts sample code for the NeurIPS 2019 paper: [van Seijen, Fatemi, Tavakoli (2019)][log_rl]. 
 
-<!-- 
-Guidelines on README format: https://review.docs.microsoft.com/help/onboard/admin/samples/concepts/readme-template?branch=master
+We provide code for the linear experiments of the paper as well as the deep RL Atari examples (LogDQN).
 
-Guidance on onboarding samples to docs.microsoft.com/samples: https://review.docs.microsoft.com/help/onboard/admin/samples/process/onboarding?branch=master
+## For the license please see LICENSE.
 
-Taxonomies for products and languages: https://review.docs.microsoft.com/new-hope/information-architecture/metadata/taxonomies?branch=master
--->
+The code for LogDQN has been developed by [Arash Tavakoli] and the code for the linear experiments has been developed by [Harm van Seijen]. 
 
-Give a short description for your sample here. What does it do and why is it important?
+## Citing
 
-## Contents
+If you use this research in your work, please cite the accompanying [paper][log_rl]:
 
-Outline the file contents of the repository. It helps users navigate the codebase, build configuration and any related assets.
+```
+@inproceedings{vanseijen2019logrl,
+  title={Using a Logarithmic Mapping to Enable Lower Discount Factors in Reinforcement Learning},
+  author={van Seijen, Harm and
+          Fatemi, Mehdi and 
+          Tavakoli, Arash},
+  booktitle={Advances in Neural Information Processing Systems},
+  year={2019}
+}
+```
 
-| File/folder       | Description                                |
-|-------------------|--------------------------------------------|
-| `src`             | Sample source code.                        |
-| `.gitignore`      | Define what to ignore at commit time.      |
-| `CHANGELOG.md`    | List of changes to the sample.             |
-| `CONTRIBUTING.md` | Guidelines for contributing to the sample. |
-| `README.md`       | This README file.                          |
-| `LICENSE`         | The license for the sample.                |
+## Linear Experiments
 
-## Prerequisites
+First navigate to `linear_experiments` folder.
 
-Outline the required components and tools that a user might need to have on their machine in order to run the sample. This can be anything from frameworks, SDKs, OS versions or IDE releases.
+To create result-files: 
+```
+python main
+```
+To visualize result-files: 
+```
+python show_results
+```
 
-## Setup
+With the default settings (i.e., keeping `main.py` unchanged), a scan over different gamma values is performed for a tile-width of 2 for a version of Q-learning without a logarithmic mapping.
 
-Explain how to prepare the sample once the user clones or downloads the repository. The section should outline every step necessary to install dependencies and set up any settings (for example, API keys and output folders).
+All experimental settings can be found at the top of the main.py file.
+To run the logarithmic-mapping version of Q-learning, set:
+```
+agent_settings['log_mapping'] = True
+```
 
-## Runnning the sample
+Results of the full scans are provided. To visualize these results for regular Q-learning or logarithmic Q-leearning, set filename in `show_results.py` to `full_scan_reg` or `full_scan_log`, respectively.
 
-Outline step-by-step instructions to execute the sample and see its output. Include steps for executing the sample from the IDE, starting specific services in the Azure portal or anything related to the overall launch of the code.
 
-## Key concepts
+## Logarithmic Deep Q-Network (LogDQN) 
 
-Provide users with more context on the tools and services used in the sample. Explain some of the code that is being used and how services interact with each other.
+This part presents an implementation of LogDQN from [van Seijen, Fatemi, Tavakoli (2019)][log_rl].
 
-## Contributing
+### Instructions
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+Our implementation of LogDQN builds on Dopamine ([Castro et al., 2018][dopamine_paper]), a Tensorflow-based research framework for fast prototyping of reinforcement learning algorithms. 
 
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+Follow the instructions below to install the LogDQN package along with a compatible version of Dopamine and their dependencies inside a conda environment.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+First install [Anaconda](https://docs.anaconda.com/anaconda/install/), and then proceed below.
+
+```
+conda create --name log-env python=3.6 
+conda activate log-env
+```
+
+#### Ubuntu
+
+```
+sudo apt-get update && sudo apt-get install cmake zlib1g-dev
+pip install absl-py atari-py gin-config gym opencv-python tensorflow==1.15rc3
+pip install git+git://github.com/google/dopamine.git@a59d5d6c68b1a6e790d5808c550ae0f51d3e85ce
+```
+
+Finally, install the LogDQN package from source.
+
+```
+cd log_dqn_experiments/log_rl
+pip install .
+```
+
+### Training an agent
+
+To run a LogDQN agent, navigate to `log_dqn_experiments` and run the following:
+
+```
+python -um log_dqn.train_atari \
+    --agent_name=log_dqn \
+    --base_dir=/tmp/log_dqn \
+    --gin_files='log_dqn/log_dqn.gin' \
+    --gin_bindings="Runner.game_name = \"Asterix\"" \
+    --gin_bindings="LogDQNAgent.tf_device=\"/gpu:0\""
+```
+
+You can set `LogDQNAgent.tf_device` to `/cpu:*` for a non-GPU version.
+
+
+
+[log_rl]: https://arxiv.org/abs/1906.00572
+[dopamine_paper]: https://arxiv.org/abs/1812.06110
+[dqn]: https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf
+[Harm van Seijen]: mailto://Harm.vanSeijen@microsoft.com
+[Arash Tavakoli]: mailto://a.tavakoli16@imperial.ac.uk

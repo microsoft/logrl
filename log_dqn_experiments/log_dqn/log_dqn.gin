@@ -1,0 +1,43 @@
+# Hyperparameters follow van Seijen, Fatemi, Tavakoli (2019).
+import dopamine.atari.run_experiment
+import log_dqn.log_dqn_agent
+import log_dqn.circular_replay_buffer_64
+import gin.tf.external_configurables
+
+# LogDQN specific hyperparameters. 
+LogDQNAgent.c = 0.5
+LogDQNAgent.k = 100
+LogDQNAgent.pos_q_init = 1.0
+LogDQNAgent.neg_q_init = 0.0
+LogDQNAgent.net_init_method = 'asym'
+LogDQNAgent.alpha = 0.00025  # alpha = beta_reg * beta_log
+
+LogDQNAgent.gamma = 0.96
+LogDQNAgent.update_horizon = 1
+LogDQNAgent.min_replay_history = 20000  # agent steps
+LogDQNAgent.update_period = 4
+LogDQNAgent.target_update_period = 8000  # agent steps
+LogDQNAgent.clip_qt_max = True
+LogDQNAgent.epsilon_train = 0.01
+LogDQNAgent.epsilon_eval = 0.001
+LogDQNAgent.epsilon_decay_period = 250000  # agent steps
+LogDQNAgent.tf_device = '/gpu:0'  # use '/cpu:*' for non-GPU version
+LogDQNAgent.loss_type = 'Huber'
+LogDQNAgent.optimizer = @tf.train.RMSPropOptimizer()
+
+tf.train.RMSPropOptimizer.learning_rate = 0.0025  # beta_log 
+tf.train.RMSPropOptimizer.decay = 0.95
+tf.train.RMSPropOptimizer.momentum = 0.0
+tf.train.RMSPropOptimizer.epsilon = 0.00001
+tf.train.RMSPropOptimizer.centered = True
+
+Runner.game_name = 'Pong'
+# Sticky actions with probability 0.25, as suggested by (Machado et al., 2017).
+Runner.sticky_actions = True
+Runner.num_iterations = 200
+Runner.training_steps = 250000  # agent steps
+Runner.evaluation_steps = 125000  # agent steps
+Runner.max_steps_per_episode = 27000  # agent steps
+ 
+WrappedReplayBuffer64.replay_capacity = 1000000
+WrappedReplayBuffer64.batch_size = 32

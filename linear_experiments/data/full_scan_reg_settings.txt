@@ -1,0 +1,1 @@
+{"log_mapping": false, "widths": [1, 2, 3, 5], "num_sweeps": 110000, "gammas": [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.94, 0.96, 0.98, 0.99], "num_datapoints": 1100, "window_size": 10000}
