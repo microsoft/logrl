@@ -2,11 +2,11 @@
 
 This repository hosts sample code for the NeurIPS 2019 paper: [van Seijen, Fatemi, Tavakoli (2019)][log_rl]. 
 
-We provide code for the linear experiments of the paper as well as the deep RL Atari examples (LogDQN).
+We provide code for the linear experiments of the paper as well as the deep RL Atari 2600 examples (LogDQN).
 
-## For the license please see LICENSE.
+## For the license, please see [LICENSE](https://github.com/microsoft/logrl/LICENSE).
 
-The code for LogDQN has been developed by [Arash Tavakoli] and the code for the linear experiments has been developed by [Harm van Seijen]. 
+The code for LogDQN has been developed by [Arash Tavakoli](https://atavakol.github.io/) and the code for the linear experiments has been developed by [Harm van Seijen](mailto:Harm.vanSeijen@microsoft.com). 
 
 ## Citing
 
@@ -23,9 +23,10 @@ If you use this research in your work, please cite the accompanying [paper][log_
 }
 ```
 
+---
 ## Linear Experiments
 
-First navigate to `linear_experiments` folder.
+First navigate to [linear_experiments](https://github.com/microsoft/logrl/linear_experiments/) folder.
 
 To create result-files: 
 ```
@@ -36,17 +37,17 @@ To visualize result-files:
 python show_results
 ```
 
-With the default settings (i.e., keeping `main.py` unchanged), a scan over different gamma values is performed for a tile-width of 2 for a version of Q-learning without a logarithmic mapping.
+With the default settings (i.e., keeping [main.py](https://github.com/microsoft/logrl/linear_experiments/main.py) unchanged), a scan over different gamma values is performed for a tile-width of 2 for a version of Q-learning without a logarithmic mapping.
 
-All experimental settings can be found at the top of the main.py file.
+All experimental settings can be found at the top of the [main.py](https://github.com/microsoft/logrl/linear_experiments/main.py) file.
 To run the logarithmic-mapping version of Q-learning, set:
 ```
 agent_settings['log_mapping'] = True
 ```
 
-Results of the full scans are provided. To visualize these results for regular Q-learning or logarithmic Q-leearning, set filename in `show_results.py` to `full_scan_reg` or `full_scan_log`, respectively.
+Results of the full scans are provided. To visualize these results for regular Q-learning or logarithmic Q-learning, set `filename` in [show_results.py](https://github.com/microsoft/logrl/linear_experiments/show_results.py) to `full_scan_reg` or `full_scan_log`, respectively.
 
-
+---
 ## Logarithmic Deep Q-Network (LogDQN) 
 
 This part presents an implementation of LogDQN from [van Seijen, Fatemi, Tavakoli (2019)][log_rl].
@@ -72,16 +73,16 @@ pip install absl-py atari-py gin-config gym opencv-python tensorflow==1.15rc3
 pip install git+git://github.com/google/dopamine.git@a59d5d6c68b1a6e790d5808c550ae0f51d3e85ce
 ```
 
-Finally, install the LogDQN package from source.
+Finally, navigate to [log_dqn_experiments](https://github.com/microsoft/logrl/log_dqn_experiments) and install the LogDQN package from source.
 
 ```
-cd log_dqn_experiments/log_rl
+cd log_dqn_experiments
 pip install .
 ```
 
 ### Training an agent
 
-To run a LogDQN agent, navigate to `log_dqn_experiments` and run the following:
+To run a LogDQN agent,
 
 ```
 python -um log_dqn.train_atari \
@@ -99,5 +100,3 @@ You can set `LogDQNAgent.tf_device` to `/cpu:*` for a non-GPU version.
 [log_rl]: https://arxiv.org/abs/1906.00572
 [dopamine_paper]: https://arxiv.org/abs/1812.06110
 [dqn]: https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf
-[Harm van Seijen]: mailto://Harm.vanSeijen@microsoft.com
-[Arash Tavakoli]: mailto://a.tavakoli16@imperial.ac.uk
