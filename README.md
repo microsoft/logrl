@@ -4,7 +4,9 @@ This repository hosts sample code for the NeurIPS 2019 paper: [van Seijen, Fatem
 
 We provide code for the linear experiments of the paper as well as the deep RL Atari 2600 examples (LogDQN).
 
-## For the license, please see [LICENSE](https://github.com/microsoft/logrl/blob/master/LICENSE).
+## [LICENSE](https://github.com/microsoft/logrl/blob/master/LICENSE)
+
+## [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct)
 
 The code for LogDQN has been developed by [Arash Tavakoli](https://atavakol.github.io/) and the code for the linear experiments has been developed by [Harm van Seijen](mailto:Harm.vanSeijen@microsoft.com). 
 

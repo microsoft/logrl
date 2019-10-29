@@ -1,3 +1,8 @@
+'''
+Copyright (c) Microsoft Corporation.
+Licensed under the MIT license.
+'''
+
 import codecs
 from os import path
 from setuptools import find_packages
