@@ -10,7 +10,7 @@ from setuptools import setup
 
 
 install_requires = ['gin-config >= 0.1.1', 'absl-py >= 0.2.2',
-                    'tensorflow==2.7.2', 'opencv-python >= 3.4.1.15',
+                    'tensorflow==2.9.3', 'opencv-python >= 3.4.1.15',
                     'gym >= 0.10.5', 'dopamine-rl==1.0.2']
 
 log_dqn_description = (
